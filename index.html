@@ -3,45 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economic Insight Dashboard</title>
+    <title>Global Economic Insight Pro</title>
     <style>
-        body { background-color: #121212; color: #e0e0e0; font-family: sans-serif; padding: 20px; }
-        .news-card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
-        .news-card a { color: #4caf50; text-decoration: none; font-size: 1.2em; font-weight: bold; }
-        .news-card p { color: #888; font-size: 0.9em; }
+        body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+        h1 { text-align: center; color: #fff; margin-bottom: 30px; }
+        .dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .chapter { background: #1e1e1e; padding: 20px; border-radius: 12px; border: 1px solid #333; }
+        .chapter h2 { color: #4caf50; border-bottom: 2px solid #4caf50; padding-bottom: 10px; }
+        .news-list { list-style: none; padding: 0; }
+        .news-item { margin-bottom: 15px; padding: 10px; background: #2a2a2a; border-radius: 6px; }
+        .news-item a { color: #fff; text-decoration: none; font-weight: bold; display: block; margin-bottom: 5px; }
+        .news-item a:hover { color: #4caf50; }
+        .news-item p { color: #888; font-size: 0.85em; margin: 0; }
     </style>
 </head>
 <body>
-    <h1>경제 뉴스 대시보드</h1>
-    <div id="news-container">로딩 중...</div>
+    <h1>Global Economic Insight Pro</h1>
+    <div class="dashboard">
+        <div class="chapter">
+            <h2>경제</h2>
+            <ul id="economy-list" class="news-list"></ul>
+        </div>
+        <div class="chapter">
+            <h2>AI</h2>
+            <ul id="ai-list" class="news-list"></ul>
+        </div>
+        <div class="chapter">
+            <h2>국제사회</h2>
+            <ul id="intl-list" class="news-list"></ul>
+        </div>
+    </div>
 
     <script>
-        // news_data_pro_v2.json 파일을 불러와서 화면에 출력
         fetch('news_data_pro_v2.json')
             .then(response => response.json())
             .then(data => {
-                const container = document.getElementById('news-container');
-                container.innerHTML = ''; // 로딩 텍스트 제거
-                
-                data.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'news-card';
-                    div.innerHTML = `
-                        <a href="${item.link}" target="_blank">${item.title}</a>
-                        <p>분류: ${item.category} | 출처: ${item.source}</p>
-                    `;
-                    container.appendChild(div);
-                });
+                renderCategory(data, '경제', 'economy-list');
+                renderCategory(data, 'AI', 'ai-list');
+                renderCategory(data, '국제사회', 'intl-list');
             })
             .catch(error => {
-                document.getElementById('news-container').innerText = '데이터를 불러오는 데 실패했습니다.';
+                console.error('Error:', error);
+                document.body.innerHTML = '<h1>데이터를 불러오는 데 실패했습니다. JSON 형식을 확인하세요.</h1>';
             });
+
+        function renderCategory(data, categoryName, elementId) {
+            const list = document.getElementById(elementId);
+            const filtered = data.filter(item => item.category === categoryName);
+            
+            list.innerHTML = filtered.map(item => `
+                <li class="news-item">
+                    <a href="${item.link}" target="_blank">${item.title}</a>
+                    <p>출처: ${item.source}</p>
+                </li>
+            `).join('');
+        }
     </script>
 </body>
 </html>
-fetch('news_data_pro_v2.json')
-  .then(response => response.json())
-  .then(data => {
-    // 뉴스 화면에 뿌려주는 코드들...
-  })
-  .catch(error => console.error('Error loading news:', error));
