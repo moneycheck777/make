@@ -1,14 +1,21 @@
-[
-  {
-    "title": "여기에 뉴스 제목을 쓰세요",
-    "link": "여기에 인터넷 뉴스 주소를 복사해서 붙여넣으세요",
-    "category": "AI",
-    "source": "신문사 이름"
-  },
-  {
-    "title": "두 번째 뉴스 제목",
-    "link": "https://www.google.com",
-    "category": "Macro",
-    "source": "경제데일리"
-  }
-]
+import json
+import os
+from datetime import datetime
+
+# (참고) 실제 뉴스 데이터는 이 함수가 가져오도록 구현합니다.
+def fetch_latest_news():
+    # 실제로는 구글 뉴스 RSS나 API를 호출해야 하지만, 
+    # 테스트를 위해 샘플 데이터를 반환합니다.
+    return [
+        {"title": f"AI 기술 트렌드 {datetime.now().strftime('%Y-%m-%d')}", "link": "https://example.com", "category": "AI", "source": "AI Daily"},
+        {"title": "글로벌 경제 매크로 브리핑", "link": "https://example.com", "category": "Macro", "source": "Global Economic"}
+    ]
+
+# JSON 파일 업데이트
+file_path = 'news_data_pro_v2.json'
+new_data = fetch_latest_news()
+
+with open(file_path, 'w', encoding='utf-8') as f:
+    json.dump(new_data, f, ensure_ascii=False, indent=2)
+
+print("뉴스 데이터가 성공적으로 업데이트되었습니다.")
