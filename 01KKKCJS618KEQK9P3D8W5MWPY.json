@@ -1,44 +1,14 @@
 [
-    {
-        "title": "Fed Maintains Interest Rates Amid Inflationary Pressures",
-        "source": "Reuters",
-        "date": "2026-03-13",
-        "category": "Macro",
-        "priority": "High"
-    },
-    {
-        "title": "Semiconductor Market Outlook: Q2 Growth Projections",
-        "source": "Bloomberg",
-        "date": "2026-03-13",
-        "category": "Tech",
-        "priority": "High"
-    },
-    {
-        "title": "Global Trade Routes Shift Following Policy Changes",
-        "source": "Associated Press",
-        "date": "2026-03-13",
-        "category": "Trade",
-        "priority": "Medium"
-    },
-    {
-        "title": "OpenAI Announces Next-Gen Model Architecture",
-        "source": "Reuters",
-        "date": "2026-03-13",
-        "category": "AI",
-        "priority": "High"
-    },
-    {
-        "title": "Regulatory Hurdles for AI in Enterprise Adoption",
-        "source": "Bloomberg",
-        "date": "2026-03-13",
-        "category": "AI",
-        "priority": "Medium"
-    },
-    {
-        "title": "AI-Driven Automation Reshaping Global Manufacturing",
-        "source": "AP News",
-        "date": "2026-03-13",
-        "category": "AI",
-        "priority": "High"
-    }
+  {
+    "title": "여기에 뉴스 제목을 쓰세요",
+    "link": "여기에 인터넷 뉴스 주소를 복사해서 붙여넣으세요",
+    "category": "AI",
+    "source": "신문사 이름"
+  },
+  {
+    "title": "두 번째 뉴스 제목",
+    "link": "https://www.google.com",
+    "category": "Macro",
+    "source": "경제데일리"
+  }
 ]
