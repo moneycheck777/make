@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Economic Insight Pro</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root { --bg:#050505; --card:#121212; --text:#d1d1d1; --accent:#00ff41; --secondary:#aaa; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin:0; padding:20px; }
+    .container { max-width: 1000px; margin:auto; }
+    .dashboard { display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+    @media (max-width: 768px) { .dashboard { grid-template-columns:1fr; } }
+    .card { background: var(--card); padding:20px; border-radius:12px; border:1px solid #222; }
+    input, select { width:100%; padding:12px; background:#1a1a1a; border:1px solid #333; color:white; margin-bottom:15px; border-radius:6px; box-sizing:border-box; }
+    .news-item { border-bottom: 1px solid #222; padding: 15px 0; }
+    .title { color: var(--accent); font-weight:bold; text-decoration:none; display:block; margin-bottom: 6px; }
+    .meta { font-size:0.85em; color: var(--secondary); display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .tag { background:#333; padding: 2px 6px; border-radius:4px; font-size:0.75em; color:white; }
+    .tag.high { background:#2b6; color:#031; }
+    .tag.medium { background:#666; }
+    .tag.low { background:#444; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1 style="color:white;">Global Economic Insight Pro</h1>
+
+  <input type="text" id="searchInput" placeholder="제목 검색..." />
+  <select id="categorySelect">
+    <option value="">모든 카테고리</option>
+          <option value="AI">AI</option>
+    </select>
+
+  <div class="dashboard">
+    <div class="card">
+      <h2>Market Sentiment</h2>
+      <canvas id="marketChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Latest Official Reports</h2>
+      <div id="news-container"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Updated detailed news schema: title, source, date, category, priority
+  const newsData = [
+  {
+    "title": "Fed Maintains Interest Rates Amid Inflationary Pressures",
+    "source": "Reuters",
+    "date": "2026-03-13",
+    "category": "Macro",
+    "priority": "High"
+  },
+  {
+    "title": "Semiconductor Market Outlook: Q2 Growth Projections",
+    "source": "Bloomberg",
+    "date": "2026-03-13",
+    "category": "Tech",
+    "priority": "High"
+  },
+  {
+    "title": "Global Trade Routes Shift Following Policy Changes",
+    "source": "Associated Press",
+    "date": "2026-03-13",
+    "category": "Trade",
+    "priority": "Medium"
+  }
+];
+
+  function populateCategories() {
+    const select = document.getElementById('categorySelect');
+    const categories = Array.from(new Set(newsData.map(n => n.category))).sort();
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      select.appendChild(opt);
+    });
+  }
+
+  function priorityClass(p) {
+    if (!p) return '';
+    const x = p.toLowerCase();
+    if (x === 'high') return 'high';
+    if (x === 'medium') return 'medium';
+    if (x === 'low') return 'low';
+    return '';
+  }
+
+  function renderNews() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const category = document.getElementById('categorySelect').value;
+    const container = document.getElementById('news-container');
+    container.innerHTML = '';
+
+    newsData
+      .filter(n => n.title.toLowerCase().includes(query) && (category === '' || n.category === category))
+      .forEach(news => {
+        const priCls = priorityClass(news.priority);
+        container.innerHTML += `
+          <div class="news-item">
+            <a href="#" class="title">${news.title}</a>
+            <div class="meta">
+              <span>Source: ${news.source} | ${news.date}</span>
+              <span class="tag">${news.category}</span>
+              <span class="tag ${priCls}">${news.priority}</span>
+            </div>
+          </div>`;
+      });
+  }
+
+  document.getElementById('searchInput').addEventListener('input', renderNews);
+  document.getElementById('categorySelect').addEventListener('change', renderNews);
+
+  const ctx = document.getElementById('marketChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['1월', '2월', '3월'],
+      datasets: [{
+        label: 'Market Volatility',
+        data: [12, 19, 15],
+        borderColor: '#00ff41',
+        backgroundColor: 'rgba(0, 255, 65, 0.15)',
+        tension: 0.35,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: 'white' } } },
+      scales: {
+        y: { ticks: { color: 'white' }, grid: { color: '#1f1f1f' } },
+        x: { ticks: { color: 'white' }, grid: { color: '#1f1f1f' } }
+      }
+    }
+  });
+
+  populateCategories();
+  renderNews();
+</script>
+</body>
+</html>
