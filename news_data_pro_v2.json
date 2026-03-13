@@ -1,14 +1,14 @@
 [
   {
-    "title": "첫 번째 뉴스 제목입니다",
-    "link": "https://google.com",
+    "title": "AI 시장이 급변하고 있습니다",
+    "link": "https://openai.com",
     "category": "AI",
-    "source": "구글뉴스"
+    "source": "OpenAI"
   },
   {
-    "title": "두 번째 뉴스 제목입니다",
-    "link": "https://naver.com",
+    "title": "글로벌 경제 전망",
+    "link": "https://bloomberg.com",
     "category": "경제",
-    "source": "네이버뉴스"
+    "source": "Bloomberg"
   }
 ]
