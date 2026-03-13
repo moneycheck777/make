@@ -39,3 +39,9 @@
     </script>
 </body>
 </html>
+fetch('news_data_pro_v2.json')
+  .then(response => response.json())
+  .then(data => {
+    // 뉴스 화면에 뿌려주는 코드들...
+  })
+  .catch(error => console.error('Error loading news:', error));
